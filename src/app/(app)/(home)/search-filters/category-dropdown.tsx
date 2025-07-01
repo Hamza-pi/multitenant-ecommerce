@@ -1,13 +1,13 @@
 "use client";
-import { Category } from "@/payload-types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
 import { useDropDownPosition } from "./use-dropdown-position";
 import SubCategoryMenu from "./subcategory-menu";
+import Link from "next/link";
 
 interface Props {
-  category: Category;
+  category: any;
   isActive?: boolean;
   isNavigationHovered?: boolean;
 }
@@ -36,11 +36,14 @@ const CategoryDropDown = ({
           variant={"elevated"}
           onMouseEnter={handleMouseEnter}
           className={cn(
-            "h-11 bg-transparent border-transparent hover:border-muted-foreground text-muted-foreground rounded-full",
-            isActive && !isNavigationHovered && "border-muted-foreground"
+            "h-11 bg-transparent border-transparent hover:border-muted-foreground text-foreground rounded-full",
+            {
+              "border-muted-foreground":
+                (isActive && !isNavigationHovered) || isOpen,
+            }
           )}
         >
-          {category.name}
+          <Link href={`${category.slug === "all" ? "" : category.slug}`}>{category.name}</Link>
         </Button>
         {category.subcategories && (
           <div

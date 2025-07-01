@@ -14,6 +14,7 @@ const SearchFilters = async () => {
         exists: false,
       },
     },
+    sort: "name",
   });
 
   const formattedData = data.docs.map((doc) => ({
@@ -26,8 +27,10 @@ const SearchFilters = async () => {
 
   return (
     <div className="px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full">
-      <SearchInput />
-      <Categories data={formattedData} />
+      <SearchInput data={formattedData}/>
+      <div className="hidden lg:block">
+        <Categories data={formattedData} />
+      </div>
     </div>
   );
 };

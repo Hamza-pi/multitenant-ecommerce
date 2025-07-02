@@ -8,10 +8,9 @@ import { useState } from "react";
 
 interface Props {
   disabled?: boolean;
-  data: any;
 }
 
-const SearchInput = ({ disabled, data }: Props) => {
+const SearchInput = ({ disabled }: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <section className="flex items-center gap-2 w-full">
@@ -23,18 +22,16 @@ const SearchInput = ({ disabled, data }: Props) => {
           disabled={disabled}
         />
       </div>
-      <Button
-        className="block lg:hidden"
-        onClick={() => setIsSidebarOpen(true)}
-        variant={"elevated"}
-      >
-        <ListFilterIcon />
-      </Button>
-      <CategoriesBar
-        data={data}
-        open={isSidebarOpen}
-        onOpenChange={setIsSidebarOpen}
-      />
+      {!disabled && (
+        <Button
+          className="block lg:hidden"
+          onClick={() => setIsSidebarOpen(true)}
+          variant={"elevated"}
+        >
+          <ListFilterIcon />
+        </Button>
+      )}
+      <CategoriesBar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
       {/* TODO: Add library button */}
     </section>
   );

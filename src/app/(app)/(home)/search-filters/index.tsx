@@ -1,36 +1,27 @@
-import { payload } from "@/lib/payload";
-import { Category } from "@/payload-types";
-
+"use client";
 import SearchInput from "./search-input";
 import Categories from "./categories";
+import { useTRPC } from "@/trpc/client";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-const SearchFilters = async () => {
-  const data = await payload.find({
-    collection: "categories",
-    depth: 1,
-    pagination: false,
-    where: {
-      parent: {
-        exists: false,
-      },
-    },
-    sort: "name",
-  });
-
-  const formattedData = data.docs.map((doc) => ({
-    ...doc,
-    subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
-      // Because of depth 1 we are confident that "doc" will be type of "Category"
-      ...(doc as Category),
-    })),
-  }));
-
+const SearchFilters = () => {
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
   return (
-    <div className="px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full">
-      <SearchInput data={formattedData}/>
+    <div className="px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full bg-muted">
+      <SearchInput />
       <div className="hidden lg:block">
-        <Categories data={formattedData} />
+        <Categories data={data} />
       </div>
+    </div>
+  );
+};
+
+export const SearchFiltersSkeleton = () => {
+  return (
+    <div className="px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full bg-muted">
+      <SearchInput disabled />
+      <div className="h-11 w-full bg-accent" />
     </div>
   );
 };

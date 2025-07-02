@@ -5,9 +5,10 @@ import { useRef, useState } from "react";
 import { useDropDownPosition } from "./use-dropdown-position";
 import SubCategoryMenu from "./subcategory-menu";
 import Link from "next/link";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
-  category: any;
+  category: CategoriesGetManyOutput[0];
   isActive?: boolean;
   isNavigationHovered?: boolean;
 }

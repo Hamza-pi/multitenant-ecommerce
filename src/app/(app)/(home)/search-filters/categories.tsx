@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
 import CategoriesBar from "./categories-sidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
-  data: any;
+  data: CategoriesGetManyOutput;
 }
 
 const Categories = ({ data }: Props) => {
@@ -22,9 +23,7 @@ const Categories = ({ data }: Props) => {
   const [isSidebarOpen, setIsSideBarOpen] = useState(false);
 
   const activeCateg = "all";
-  const activeCategoryIndex = data.findIndex(
-    (cat: Category) => cat.slug === activeCateg
-  );
+  const activeCategoryIndex = data.findIndex((cat) => cat.slug === activeCateg);
   const isActiveCategHidden =
     activeCategoryIndex >= visibleCount && activeCategoryIndex !== -1;
 
@@ -60,7 +59,7 @@ const Categories = ({ data }: Props) => {
         ref={measureRef}
         className="flex opacity-0 pointer-events-none fixed -top-full -left-full"
       >
-        {data.map((category: Category) => (
+        {data.map((category) => (
           <CategoryDropDown
             key={category.id}
             category={category}
@@ -76,7 +75,7 @@ const Categories = ({ data }: Props) => {
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}
       >
-        {data.slice(0, visibleCount).map((category: Category) => (
+        {data.slice(0, visibleCount).map((category) => (
           <CategoryDropDown
             key={category.id}
             category={category}
@@ -87,7 +86,7 @@ const Categories = ({ data }: Props) => {
         <li ref={viewAllRef} className="shrink-0">
           <Button
             variant={"elevated"}
-            onClick={()=>setIsSideBarOpen(true)}
+            onClick={() => setIsSideBarOpen(true)}
             className={cn(
               "h-11 bg-transparent border-transparent space-x-2 hover:border-muted-foreground text-foreground rounded-full",
               {
@@ -100,7 +99,7 @@ const Categories = ({ data }: Props) => {
           </Button>
         </li>
       </ul>
-      <CategoriesBar open={isSidebarOpen} onOpenChange={setIsSideBarOpen} data={data} />
+      <CategoriesBar open={isSidebarOpen} onOpenChange={setIsSideBarOpen} />
     </>
   );
 };

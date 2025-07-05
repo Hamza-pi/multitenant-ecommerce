@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { registerSchema } from "@/modules/auth/schema";
 import { Form } from "@/components/ui/form";
@@ -18,10 +18,15 @@ import { toast } from "sonner";
 const SignUpView = () => {
   const router = useRouter();
   const trpc = useTRPC();
+  const queryClient = useQueryClient();
+
   const { mutate, isPending } = useMutation(
     trpc.auth.register.mutationOptions({
       onError: (error) => toast.error(error?.message),
-      onSuccess: () => router.push("/"),
+      onSuccess:async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
+        router.push("/");
+      },
     })
   );
 

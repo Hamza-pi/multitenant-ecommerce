@@ -23,7 +23,7 @@ const SignUpView = () => {
   const { mutate, isPending } = useMutation(
     trpc.auth.register.mutationOptions({
       onError: (error) => toast.error(error?.message),
-      onSuccess: () => async () => {
+      onSuccess:async () => {
         await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         router.push("/");
       },

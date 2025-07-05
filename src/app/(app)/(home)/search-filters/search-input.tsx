@@ -1,10 +1,10 @@
 "use client";
 import { ListFilterIcon, SearchIcon } from "lucide-react";
+import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import CategoriesBar from "./categories-sidebar";
-import { useState } from "react";
+import CategoriesBar from "@/modules/categories/ui/views/categories-sidebar";
 
 interface Props {
   disabled?: boolean;

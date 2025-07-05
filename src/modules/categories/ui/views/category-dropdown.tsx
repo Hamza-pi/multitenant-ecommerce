@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
-import { useDropDownPosition } from "./use-dropdown-position";
+import { useDropDownPosition } from "@/hooks/use-dropdown-position";
 import SubCategoryMenu from "./subcategory-menu";
 import Link from "next/link";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
@@ -44,7 +44,9 @@ const CategoryDropDown = ({
             }
           )}
         >
-          <Link href={`${category.slug === "all" ? "" : category.slug}`}>{category.name}</Link>
+          <Link href={`${category.slug === "all" ? "" : category.slug}`}>
+            {category.name}
+          </Link>
         </Button>
         {category.subcategories && (
           <div

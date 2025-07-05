@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { dmSans } from "@/lib/font";
 import { TRPCReactProvider } from "@/trpc/client";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,6 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${dmSans.className} antialiased`}>
         <TRPCReactProvider>{children}</TRPCReactProvider>
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );

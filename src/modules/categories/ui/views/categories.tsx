@@ -1,6 +1,5 @@
 "use client";
 
-import { Category } from "@/payload-types";
 import CategoryDropDown from "./category-dropdown";
 import { useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";

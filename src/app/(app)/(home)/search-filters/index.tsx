@@ -1,6 +1,6 @@
 "use client";
 import SearchInput from "./search-input";
-import Categories from "./categories";
+import Categories from "@/modules/categories/ui/views/categories";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 

@@ -1,12 +1,13 @@
 "use client";
 
-import CategoryDropDown from "./category-dropdown";
 import { useLayoutEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useParams } from "next/navigation";
 import { ListFilterIcon } from "lucide-react";
-import CategoriesBar from "./categories-sidebar";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import CategoryDropDown from "./category-dropdown";
+import CategoriesBar from "./categories-sidebar";
 
 interface Props {
   data: CategoriesGetManyOutput;
@@ -16,12 +17,14 @@ const Categories = ({ data }: Props) => {
   const containerRef = useRef<HTMLUListElement>(null);
   const measureRef = useRef<HTMLUListElement>(null);
   const viewAllRef = useRef<HTMLLIElement>(null);
+  const params = useParams();
 
   const [visibleCount, setVisibleCount] = useState(0);
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSidebarOpen, setIsSideBarOpen] = useState(false);
 
-  const activeCateg = "all";
+  const category = params.category as string[] | undefined;
+  const activeCateg = category?.[0] || "all";
   const activeCategoryIndex = data.findIndex((cat) => cat.slug === activeCateg);
   const isActiveCategHidden =
     activeCategoryIndex >= visibleCount && activeCategoryIndex !== -1;
